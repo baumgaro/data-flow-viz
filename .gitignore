@@ -62,4 +62,11 @@ build/
 
 # System Files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Office temporary files
+~$*.xlsx
+~$*.xls
+~$*.docx
+~$*.doc
+~$* 
