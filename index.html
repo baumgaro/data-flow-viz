@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Flow Vizualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+    <style>
+        #cy {
+            width: 100vw;
+            height: calc(100vh - 4rem);
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+            display: block !important;
+        }
+        .node-details {
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+            z-index: 2;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container">
+        <div class="flex items-center justify-between mb-4 px-4">
+            <div class="flex items-center space-x-4">
+                <input type="file" id="excelFile" accept=".xlsx" class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-md file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100">
+                <button id="saveLayoutButton" class="hidden bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                    Save Layout
+                </button>
+            </div>
+        </div>
+        
+        <div id="cy" class="relative"></div>
+        
+        <div id="nodeDetails" class="hidden fixed top-4 right-4 w-96 bg-white rounded-lg shadow-lg p-4 border border-gray-200 node-details">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Node Details</h2>
+                <button onclick="hideDetails()" class="text-gray-400 hover:text-gray-500">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Node Color</label>
+                <input type="color" id="nodeColorPicker" onchange="updateNodeColor(this.value)" class="w-full h-8 rounded border border-gray-300">
+            </div>
+            <div id="details-content" class="space-y-4"></div>
+        </div>
+
+        <div id="edgeDetails" class="hidden fixed top-4 right-4 w-96 bg-white rounded-lg shadow-lg p-4 border border-gray-200 node-details">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Edge Details</h2>
+                <button onclick="hideEdgeDetails()" class="text-gray-400 hover:text-gray-500">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="edge-details-content" class="space-y-4"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
